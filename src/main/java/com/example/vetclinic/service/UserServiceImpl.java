@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,13 +28,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserDto userDto) {
-        Role role = roleRepository.findByName(TbConstants.Roles.USER);
+        Role role = roleRepository.findByName(TbConstants.Roles.ADMIN);
 
         if (role == null)
-            role = roleRepository.save(new Role(TbConstants.Roles.USER));
+            role = roleRepository.save(new Role(TbConstants.Roles.ADMIN));
 
-        User user = new User(userDto.getName(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
-                Arrays.asList(role));
+        User user = new User(userDto.getName(), userDto.getEmail(),passwordEncoder.encode(userDto.getPassword()),Arrays.asList(role));
+// User user = new User(userDto.getName(),"Lastt",userDto.getEmail(),passwordEncoder.encode(userDto.getPassword()),"1334","date",Arrays.asList(role));
+
+
         userRepository.save(user);
     }
 

@@ -21,6 +21,11 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/")
+    public String homeForm() {
+        return "user";
+    }
+
     @RequestMapping("/login")
     public String loginForm() {
         return "login";

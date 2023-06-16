@@ -24,14 +24,15 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/registration/**").permitAll()
                         .requestMatchers("/login/**").permitAll()
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/users/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/user/")
+                        .defaultSuccessUrl("/")
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll())

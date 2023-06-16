@@ -1,5 +1,7 @@
 package com.example.vetclinic.model;
 
+
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,20 +13,24 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "services")
+public class Service {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long role_id;
-    @Column(nullable = false, unique = true)
-    private String name;
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users = new ArrayList<>();
+    private Long service_id;
+    @Column(nullable = false)
+    private String title;
+    @Column(nullable = false)
+    private String description;
 
-    public Role(String name) {
-        this.name = name;
-    }
+    @Column(nullable = false)
+    private String duration;
+
+    @Column(nullable = false)
+    private double price;
+
 }
