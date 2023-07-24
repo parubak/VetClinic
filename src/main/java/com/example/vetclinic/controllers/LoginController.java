@@ -1,12 +1,13 @@
 package com.example.vetclinic.controllers;
 
 
-
 import com.example.vetclinic.dto.UserDto;
 import com.example.vetclinic.model.User;
-import com.example.vetclinic.service.UserService;
+import com.example.vetclinic.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,14 +17,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class LoginController {
+public class LoginController{
 
     @Autowired
-    private UserService userService;
+    UserServiceImpl userService;
 
     @RequestMapping("/")
     public String homeForm() {
-        return "user";
+        return "new/index";
     }
 
     @RequestMapping("/login")
@@ -33,6 +34,9 @@ public class LoginController {
 
     @RequestMapping("/admin")
     public String adminForm() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getPrincipal()+" -getPrincipal()");
+
         return "admin";
     }
 
@@ -48,10 +52,10 @@ public class LoginController {
             @Valid @ModelAttribute("user") UserDto userDto,
             BindingResult result,
             Model model) {
-        User existingUser = userService.findUserByEmail(userDto.getEmail());
+        User existingUser = userService.findUserByPhoneNumber(userDto.getNumber());
 
         if (existingUser != null)
-            result.rejectValue("email", null,
+            result.rejectValue("number", null,
                     "User already registered !!!");
 
         if (result.hasErrors()) {
@@ -59,7 +63,8 @@ public class LoginController {
             return "/registration";
         }
 
-        userService.saveUser(userDto);
+        userService.saveUserRegistration(userDto);
+
         return "redirect:/registration?success";
     }
 }

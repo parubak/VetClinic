@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,26 +22,32 @@ public class Staffer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
-    @Column(nullable = false, unique = true)
-    private String email;
-    @Column(nullable = false)
-    private String password;
+    protected Long id;
 
-    @Column(nullable = false)
-    private String first_name;
+    @Column(nullable = true)
+    private String fullName;
 
-    @Column(nullable = false)
-    private String last_name;
+    @Column(nullable = true, length = 64)
+    protected String photos;
 
-    @Column(nullable = false)
-    private Date date_birth;
+    @Column(nullable = true)
+    private String description;
 
-    @Column(nullable = false)
-    private String phone_number;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "staffer_specialization",
+            joinColumns = {@JoinColumn(name = "staffer_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "specialization_id", referencedColumnName = "id")}
+    )
+    protected List<Specialization> specializations = new ArrayList<>();
 
-    @Column(nullable = false)
-    private String job_position;
 
+    @Transient
+    public String getPhotosPath(String uploadPath) {
+
+        if (this.photos == null || this.id == null) return "";
+
+        return "/"+uploadPath+"/"+this.photos;
+    }
 
 }

@@ -8,40 +8,141 @@ import com.example.vetclinic.repo.RoleRepository;
 import com.example.vetclinic.repo.UserRepository;
 import com.example.vetclinic.util.TbConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
+
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
+    public UserServiceImpl(){
+//        this.courses= new HashMap<>();
+//        this.courseIdGenerator=new AtomicInteger(0);
+////        initializeUser();
+    }
     @Override
-    public void saveUser(UserDto userDto) {
+    public void saveUserRegistration(UserDto userDto) {
+        if (!Objects.equals(userDto.getPassword(),userDto.getWatchingPassword()))
+            throw new RuntimeException("Password is not equals");
+
         Role role = roleRepository.findByName(TbConstants.Roles.ADMIN);
 
         if (role == null)
             role = roleRepository.save(new Role(TbConstants.Roles.ADMIN));
 
-        User user = new User(userDto.getName(), userDto.getEmail(),passwordEncoder.encode(userDto.getPassword()),Arrays.asList(role));
-// User user = new User(userDto.getName(),"Lastt",userDto.getEmail(),passwordEncoder.encode(userDto.getPassword()),"1334","date",Arrays.asList(role));
-
+        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+        User user=User.builder().firstName(userDto.getName())
+                .phone(userDto.getNumber())
+//                .password(userDto.getPassword())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .roles(List.of(role))
+                .build();
 
         userRepository.save(user);
+        System.out.println("userDto = " + userDto+"saveUserRegistrationEnd");
+    }
+
+
+    @Override
+    public User findUserByPhoneNumber(String phoneNumber) {
+        System.out.println("phoneNumber = " + phoneNumber+"findUserByPhoneNumber");
+        return userRepository.findFirstByPhone(phoneNumber);
+    }
+
+
+
+
+    @Override
+    public User uploadUser(User user, MultipartFile multipartFile, String uploadPath) throws IOException {
+
+        return null;
+    }
+
+
+
+    public User uploadUserPhoto(User user, MultipartFile multipartFile, String uploadPath) throws IOException {
+
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        User userDb = findUserByPhoneNumber(user.getPhone());
+        fileName = user.getId() + "_" + UUID.randomUUID()+fileName;
+
+        String delPhoto = userDb.getPhotos();
+        userDb.setPhotos(fileName);
+
+
+        FileUploadUtil.saveFile(Paths.get(uploadPath, userDb.getId().toString()).toString()
+                , fileName, multipartFile, delPhoto);
+
+        userRepository.save(userDb);
+        return userDb;
     }
 
     @Override
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findUserById(long id) {
+        return userRepository.getReferenceById(id);
     }
+
+    @Override
+    public String getPathPhoto() {
+        return null;
+    }
+
+    public User getAuthUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findFirstByPhone(auth.getName());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String usernameOrNumber) throws UsernameNotFoundException {
+
+
+        System.out.println("usernameOrNumber = " + usernameOrNumber+"loadUserByUsername");
+
+        User user = userRepository.findFirstByPhone(usernameOrNumber);
+        if (user != null) {
+            return new org.springframework.security.core.userdetails.User(
+                    user.getPhone()
+                    ,user.getPassword(),
+                    user.getRoles().stream()
+                            .map((role) -> new SimpleGrantedAuthority(role.getName()))
+                            .collect(Collectors.toList()));
+        } else {
+            throw new UsernameNotFoundException("Invalid number or password");
+        }
+    }
+
+
+//    @Override
+//    public String getPathPhoto(Long id) {
+//        return null;
+//    }
+
+
+
+
+
 }

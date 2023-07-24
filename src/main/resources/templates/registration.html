@@ -31,16 +31,22 @@
                        th:if="${#fields.hasErrors('name')}"></p>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="email">Email</label>
-                    <input class="form-control" id="email" name="email" type="email">
-                    <p class="text-danger" th:errors="*{email}"
-                       th:if="${#fields.hasErrors('email')}"></p>
+                    <label class="form-label" for="number">Number</label>
+                    <input class="form-control" id="number" name="number" type="text">
+                    <p class="text-danger" th:errors="*{number}"
+                       th:if="${#fields.hasErrors('number')}"></p>
                 </div>
                 <div class="mb-3">
                     <label class="col-sm-2 col-form-label" for="password">Password</label>
                     <input class="form-control" id="password" name="password" type="password">
                     <p class="text-danger" th:errors="*{password}"
                        th:if="${#fields.hasErrors('password')}"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="col-sm-2 col-form-label" for="watching-password">Watching password</label>
+                    <input class="form-control" id="watching-password" name="watchingPassword" type="password">
+                    <p class="text-danger" th:errors="*{watchingPassword}"
+                       th:if="${#fields.hasErrors('watchingPassword')}"></p>
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-primary mb-3" type="submit">Register</button>
