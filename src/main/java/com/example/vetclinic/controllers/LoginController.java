@@ -22,23 +22,12 @@ public class LoginController{
     @Autowired
     UserServiceImpl userService;
 
-    @RequestMapping("/")
-    public String homeForm() {
-        return "new/index";
-    }
 
     @RequestMapping("/login")
     public String loginForm() {
         return "login";
     }
 
-    @RequestMapping("/admin")
-    public String adminForm() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getPrincipal()+" -getPrincipal()");
-
-        return "admin";
-    }
 
     @GetMapping("/registration")
     public String registrationForm(Model model) {

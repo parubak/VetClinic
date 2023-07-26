@@ -11,8 +11,7 @@
 <body>
 
 <div class="container">
-    <h2>Card Image</h2>
-    <p>Image at the top (card-img-top):</p>
+    <a href="add">ADD CART</a>
     <div class="card" style="width:400px" th:each="staffer : ${staffers}">
 
         <img class="card-img-top" th:src="${path}+${staffer.getPhotos()}" alt="Card image" style="width:100%">

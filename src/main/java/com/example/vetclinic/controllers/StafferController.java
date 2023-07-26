@@ -70,7 +70,7 @@ public class StafferController {
     }
     @PostMapping(value = "/edit")
     public String edit(Staffer staffer) {
-        System.out.println("staffer = " + staffer);
+        System.out.println("staffer = " + staffer.getPhotos());
         stafferRepository.save(staffer);
         return "redirect:/staffer/list";
     }
@@ -93,7 +93,7 @@ public class StafferController {
 
         specializationRepository.save(specialization);
 
-        return "redirect:/specialization/add";
+        return "redirect:/staffer/add";
     }
 
 }

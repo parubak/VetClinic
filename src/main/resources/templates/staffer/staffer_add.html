@@ -38,7 +38,8 @@ x
 
 
                         </div>
-                        <label for="hobbies">User hobbies (multiple select):</label>
+                        <a href="specialization/add">Specialization ADD</a>
+                        <label for="hobbies">Specialization (multiple select):</label>
                         <br />
                         <select id="hobbies" th:field="*{specializations}" size="10" multiple="multiple">
                             <option th:each="s : ${specializations}"
