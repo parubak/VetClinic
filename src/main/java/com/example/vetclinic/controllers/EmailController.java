@@ -28,7 +28,6 @@ public class EmailController {
     @GetMapping("/query")
     public String query(Model model)
     {
-        System.out.println("query");
         Query query = new Query();
 
         model.addAttribute("query", query);
@@ -49,6 +48,28 @@ public class EmailController {
 
         return new ResponseEntity<>("Please check your inbox", HttpStatus.OK);
     }
+
+    @PostMapping(value = "/contact")
+    public String sendSimpleEmail(@RequestParam(value = "message") String message, @RequestParam(value = "email") String email, @RequestParam(value = "name") String name) {
+
+        try {
+            System.out.println(email);
+            emailService.sendSimpleEmail(email,name,message);
+//            emailService.sendSimpleEmail(email, "Welcome", "This is a welcome email for your!!");
+        } catch (MailException mailException) {
+            System.out.println("ehgjghjkfgkfkk2");
+            LOG.error("Error while sending out email..{}", mailException.getStackTrace());
+//            return new ResponseEntity<>("Unable to send email", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (MessagingException e) {
+            System.out.println("ehgjghjkfgkfkk3");
+            throw new RuntimeException(e);
+        }
+
+//        return new ResponseEntity<>("Please check your inbox", HttpStatus.OK);
+        return "redirect:/contacts";
+    }
+
+
 
     @GetMapping(value = "/simple-order-email/{user-email}")
     public @ResponseBody ResponseEntity sendEmailAttachment(@PathVariable("user-email") String email) {

@@ -38,7 +38,7 @@ public class HomeController {
         model.addAttribute("staffers",staffers);
         model.addAttribute("path", "/"+uploadPath+"/staffer/");
 
-        return "new/index";
+        return "new/contact";
     }
 
 

@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 public class EmailServiceImpl implements EmailService  {
+    static String SEND_TO="parubak96@gmail.com";
     @Autowired
     public JavaMailSender emailSender;
 
@@ -34,20 +35,24 @@ public class EmailServiceImpl implements EmailService  {
         context.setVariable("query",query);
         String emailContent = templateEngine.process("email/templates", context);
 
-        mimeMessageHelper.setTo("parubak96@gmail.com");
+        mimeMessageHelper.setTo(SEND_TO);
+        mimeMessageHelper.setFrom(SEND_TO);
         mimeMessageHelper.setSubject("Clinic site");
         mimeMessageHelper.setText(emailContent, true);
         emailSender.send(message);
     }
 
     @Override
-    public void sendSimpleEmail(String toAddress, String subject, String message) {
+    public void sendSimpleEmail(String toAddress, String name, String message) throws MessagingException {
 
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(toAddress);
-        simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText(message);
-        emailSender.send(simpleMailMessage);
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        helper.setTo(SEND_TO);
+        helper.setFrom(toAddress);
+        helper.setSubject("Звернення");
+        String sendMassage=String.format("Від: %S <br>Зворотня адреса: %s <br>Текст звернення: %s" ,name,toAddress,message);
+        helper.setText(sendMassage,true);
+        emailSender.send(mimeMessage);
     }
 
     @Override
