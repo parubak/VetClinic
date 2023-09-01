@@ -8,7 +8,6 @@ import com.example.vetclinic.repo.RoleRepository;
 import com.example.vetclinic.repo.UserRepository;
 import com.example.vetclinic.util.TbConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +45,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void saveUserRegistration(UserDto userDto) {
         if (!Objects.equals(userDto.getPassword(),userDto.getWatchingPassword()))
-            throw new RuntimeException("Password is not equals");
+            throw new RuntimeException("Паролі не співпадають!!!");
 
         Role role = roleRepository.findByName(TbConstants.Roles.ADMIN);
 
@@ -56,7 +54,7 @@ public class UserServiceImpl implements IUserService {
 
         PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
         User user=User.builder().firstName(userDto.getName())
-                .phone(userDto.getNumber())
+                .number(userDto.getNumber())
 //                .password(userDto.getPassword())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .roles(List.of(role))
@@ -70,7 +68,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User findUserByPhoneNumber(String phoneNumber) {
         System.out.println("phoneNumber = " + phoneNumber+"findUserByPhoneNumber");
-        return userRepository.findFirstByPhone(phoneNumber);
+        return userRepository.findFirstByNumber(phoneNumber);
     }
 
 
@@ -87,11 +85,11 @@ public class UserServiceImpl implements IUserService {
     public User uploadUserPhoto(User user, MultipartFile multipartFile, String uploadPath) throws IOException {
 
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        User userDb = findUserByPhoneNumber(user.getPhone());
+        User userDb = findUserByPhoneNumber(user.getNumber());
         fileName = user.getId() + "_" + UUID.randomUUID()+fileName;
 
-        String delPhoto = userDb.getPhotos();
-        userDb.setPhotos(fileName);
+        String delPhoto = userDb.getNumber();
+        userDb.setNumber(fileName);
 
 
         FileUploadUtil.saveFile(Paths.get(uploadPath, userDb.getId().toString()).toString()
@@ -113,7 +111,7 @@ public class UserServiceImpl implements IUserService {
 
     public User getAuthUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userRepository.findFirstByPhone(auth.getName());
+        return userRepository.findFirstByNumber(auth.getName());
     }
 
     @Override
@@ -122,10 +120,10 @@ public class UserServiceImpl implements IUserService {
 
         System.out.println("usernameOrNumber = " + usernameOrNumber+"loadUserByUsername");
 
-        User user = userRepository.findFirstByPhone(usernameOrNumber);
+        User user = userRepository.findFirstByNumber(usernameOrNumber);
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(
-                    user.getPhone()
+                    user.getNumber()
                     ,user.getPassword(),
                     user.getRoles().stream()
                             .map((role) -> new SimpleGrantedAuthority(role.getName()))

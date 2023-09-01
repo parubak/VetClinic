@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Barber</title>
+    <title>Послуги</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -26,12 +26,21 @@
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 <body>
+<!-- header_start  -->
+<div th:replace="/fragments/menuAdmin::headerAdmin"></div>
+<!-- header_start  -->
 <div class="whole-wrap">
     <div class="container box_1170">
-        <a href="/admin/price/add">Add S</a>
-
+        <div class="row justify-content-center ">
+            <div class="col-lg-6 col-md-10">
+                <div class="section_title text-center mb-95">
+                    <h3>Перелік послуг</h3>
+                    <a class="btn btn-success" href="price/add">Додати нову послугу</a>
+                    <p>Натисніть на назву послуги, щоб почати редагувати.</p>
+                </div>
+            </div>
+        </div>
         <div class="section-top-border">
-            <h3 class="mb-30">Table</h3>
             <div class="progress-table-wrap">
                 <div class="progress-table">
                     <div class="table-head">
@@ -41,8 +50,8 @@
                         <div class="percentage">Опис</div>
                         <div class="visit">Ціна</div>
                     </div>
-                    <div class="table-row"  th:each="p : ${price}">
-                        <div class="serial">01</div>
+                    <div class="table-row"  th:each="p, i : ${price}">
+                        <div class="serial"  th:text="${i.count}"></div>
                         <div class="country"><a th:href="'price/edit/'+${p.getId()}"
                                                 th:text="${p.getTitle()}"></a> </div>
                         <div class="visit" th:text="${p.getDuration()}"></div>
@@ -59,6 +68,8 @@
         </div>
     </div>
 </div>
-
+<!-- footer_start  -->
+<div th:replace="~{/fragments/menu::footer}"></div>
+<!-- footer_end  -->
 </body>
 </html>

@@ -32,6 +32,6 @@ public class Service {
     private String duration;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private Integer price;
 
 }

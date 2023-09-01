@@ -1,0 +1,47 @@
+<th:block th:fragment="headerAdmin">
+    <header>
+        <div class="header-area ">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-3 col-lg-3">
+                            <div class="logo">
+                                <a href="index.html">
+                                    <img src="/img/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-9">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="/admin"><span class="bold">Адмінка</span></a></li>
+                                        <li><a href="/admin/staffer/list"><span class="bold">Співробітники<i class="ti-angle-down"></i></span></a>
+                                            <ul class="submenu">
+                                                <li><a href="/admin/staffer/list"><span class="bold">Список співробітників</span></a></li>
+                                                <li><a href="/admin/staffer/add"><span class="bold">Додати співробітника</span></a></li>
+                                                <li><a href="/admin/staffer/specialization/add"><span class="bold">Додати спеціалізацію</span></a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="/admin/price"><span class="bold">Послуги</span><i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="/admin/price"><span class="bold">Список</span></a></li>
+                                                <li><a href="/admin/price/add"><span class="bold">Додати послугу</span></a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="/"><span class="bold">Головна</span></a></li>
+                                        <li><a href="/logout"><span class="bold">Вихід</span></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+</th:block>

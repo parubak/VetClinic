@@ -17,10 +17,10 @@
   <p>Телефон: <strong th:text="${#strings.defaultString(user.getPhone(),'нет телефона')}"></strong></p>
   <p>Email: <strong th:text="${#strings.defaultString(user.getEmail(),'no tmail')}"></strong></p>
   <p>День рождения: <strong th:text="${#strings.defaultString(user.getDateBirth(),'no дати')}"></strong></p>
-  <div th:if="${user.getPhotos()}">
+  <div th:if="${user.getNumber()}">
     <img  th:src="${user.getPhotoPath()}" />
   </div>
-  <a th:href="@{/}" class="btn btn-primary">Go back</a>
+  <a th:href="@{/static}" class="btn btn-primary">Go back</a>
 </div>
 <!--<p th:text="${#strings.defaultString(user.getEmail(),'no tmail')}"></p>-->
 <!--<p th:text="${#strings.isEmpty(user.getLastName())}"></p>-->

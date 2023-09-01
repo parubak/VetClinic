@@ -3,9 +3,7 @@ package com.example.vetclinic.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +16,6 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-
-
-   private transient   String photoPath;
 
 
     @Id
@@ -38,14 +33,10 @@ public class User {
     protected String lastName;
 
     @Column(nullable = true, length = 64)
-    protected String photos;
+    protected String number;
 
     @Column(nullable = true)
     protected LocalDate dateBirth;
-
-
-    @Column(nullable = false, unique = true)
-    protected String phone;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -63,7 +54,6 @@ public class User {
         this.password = password;
         this.roles = roles;
         this.dateBirth = dateBirth;
-        this.phone = phone_number;
 
     }
 
@@ -74,11 +64,4 @@ public class User {
     this.roles=asList;
     }
 
-    @Transient
-    public void setPhotosPath(String uploadPath) {
-
-        if (photos == null || this.id == null) return;
-
-       this.photoPath= "/"+uploadPath+"/"+this.id+"/"+this.photos;
-    }
 }

@@ -57,7 +57,7 @@ public class FileController {
 
             stafferRepository.save(staffer);
 
-            return new RedirectView("/staffer/edit/" + staffer.getId(), true);
+            return new RedirectView("/admin/staffer/edit/" + staffer.getId(), true);
         }
         return new RedirectView("/error12", true);
     }

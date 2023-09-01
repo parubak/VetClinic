@@ -28,13 +28,12 @@
 <body>
 <div class="whole-wrap">
     <div class="container box_1170">
-
         <div class="section-top-border">
             <div class="section-top-border">
                 <div class="row">
                     <div class="col-lg-8 col-md-8">
-                        <h3 class="mb-30">Form Element</h3>
-                        <form method="post" th:object="${query}">
+                        <h3 class="mb-30">Запис в клініку</h3>
+                        <form method="post" action="/email/query" th:object="${query}">
                             <div class="mt-10">
                                 <label for="fullName">Ім'я Прізвище*:</label>
                                 <input id="fullName" type="text" name="fullName" placeholder="Миколо Пупкін"
@@ -95,7 +94,6 @@
                                             <option value="Стоматолог">Стоматолог</option>
                                             <option value="Грумінг">Грумінг</option>
                                             <option value="Діагностичні процедури">Діагностичні процедури</option>
-                                            <option value="Вечір">Вечір</option>
                                         </select>
                                     </div>
                                 </div>
@@ -111,7 +109,7 @@
                             </div>
 
                             <div class="mt-10">
-                                <input type="submit" class="genric-btn success circle">
+                                <input type="submit" class="genric-btn success circle" value="Записатися">
                             </div>
 
                         </form>

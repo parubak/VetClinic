@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Barber</title>
+    <title>Редагування послуги</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -26,40 +26,54 @@
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 <body>
-<div class="whole-wrap">
-    <div class="container box_1170">
-
-        <div class="section-top-border">
+<!-- header_start  -->
+<div th:replace="/fragments/menuAdmin::headerAdmin"></div>
+<!-- header_start  -->
+<div class="container">
+    <div class="whole-wrap">
+        <div class="container box_1170">
             <div class="section-top-border">
                 <div class="row">
-                    <div class="col-lg-8 col-md-8">
-                        <h3 class="mb-30">Form Element</h3>
+                    <div class="col-8 mx-auto">
+                        <h3 class="mb-30 text-center">Редагування послуги</h3>
+                        <div th:if="${param.save}">
+                            <div class="alert alert-info">
+                                Зміни збережено !!!
+                            </div>
+                        </div>
+                        <br>
                         <form method="post" action="/admin/price/edit" th:object="${service}">
                             <input type="hidden" th:field="*{id}" />
-                            <div class="mt-10">
-                                <input type="text" name="title" placeholder="Title" th:field="*{title}"
-                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'title'" required
+                            <div class="form-group">
+                                <label class="col-form-label" for="title">Назва послуги</label>
+                                <input type="text" id="title" name="title" placeholder="Назва послуги"
+                                       th:field="*{title}"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Назва послуги'"
+                                       required
                                        class="single-input">
                             </div>
-                            <div class="mt-10">
-                                <input type="text" name="duration" placeholder="Duration" th:field="*{duration}"
-                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'duration'" required
+                            <div class="form-group">
+                                <label class="col-form-label" for="duration">Тривалість</label>
+                                <input type="text" id="duration" name="duration" placeholder="Тривалість"
+                                       th:field="*{duration}"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Тривалість'" required
                                        class="single-input">
                             </div>
-                            <div class="mt-10">
-                                <input type="number" name="price" placeholder="price" th:field="*{price}"
-                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Price'" required
+                            <div class="form-group">
+                                <label class="col-form-label" for="price">Вартість</label>
+                                <input type="number" id="price" name="price" placeholder="Вартість" th:field="*{price}"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Вартість'" required
                                        class="single-input">
                             </div>
-
-
-                            <div class="mt-10">
-								<textarea class="single-textarea" placeholder="description" name="description" th:field="*{description}"
-                                          onfocus="this.placeholder = ''"
-                                          onblur="this.placeholder = 'Message'" required></textarea>
+                            <div class="form-group">
+                                <label class="col-form-label" for="description">Опис</label>
+                                <textarea class="single-textarea" id="description" placeholder="Опис" name="description"
+                                          th:field="*{description}"
+                                          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Опис'" required>
+                                </textarea>
                             </div>
 
-                            <div class="mt-10">
+                            <div class="form-group text-center">
                                 <input type="submit" class="genric-btn success circle" th:value="Зберегти" >
                                 <a th:href="'/admin/price/delete/'+ *{id}" class="genric-btn danger circle">Видалити</a>
                             </div>
@@ -119,5 +133,8 @@
             format: 'HH.MM'
         });
     </script>
+<!-- footer_start  -->
+<div th:replace="~{/fragments/menu::footer}"></div>
+<!-- footer_end  -->
 </body>
 </html>

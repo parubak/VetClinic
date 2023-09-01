@@ -34,7 +34,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         http.csrf().disable().userDetailsService(userDetailsService)
                 .authenticationProvider(authProvider())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/registration/**").permitAll()
+//                        .requestMatchers("/admin/registration/**").permitAll()
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/dell/**").permitAll()
                         .requestMatchers("/styles/**").permitAll()
@@ -44,10 +44,12 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 //                        .anyRequest().authenticated()
                         .anyRequest().permitAll()
                 )
-                .formLogin((form) -> form
+                .formLogin((form) -> form.
+                        usernameParameter("number").
+                        passwordParameter("password")
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/admin")
                         .failureUrl("/eror")
                         .permitAll()
                 )

@@ -15,17 +15,17 @@ import java.time.LocalDate;
 @Builder
 public class UserDto {
 
-    @NotEmpty(message = "Please enter valid name.")
+    @NotEmpty(message = "Введіть дійсне ім'я.")
     private String name;
 
-    @NotEmpty(message = "Please enter valid number.")
+    @NotEmpty(message = "Введіть дійсний номер.")
     @NumberFormat
     private String number;
 
-    @NotEmpty(message = "Please enter valid password.")
+    @NotEmpty(message = "Введіть дійсний пароль.")
     private String password;
 
-    @NotEmpty(message = "Please enter valid watchingPassword.")
+    @NotEmpty(message = "Повторіть введений вами пароль.")
     private String watchingPassword;
 
 
@@ -36,15 +36,15 @@ public class UserDto {
     private String email;
     @Transient
     private LocalDate dateBirth;
-@Transient
-    private String photo;
+//@Transient
+//    private String photo;
 
     public UserDto(User user) {
         this.name=user.getFirstName();
         this.lastName=user.getLastName();
-        this.number=user.getPhone();
+        this.number=user.getNumber();
         this.email=user.getEmail();
         this.dateBirth=user.getDateBirth();
-        this.photo=user.getPhotoPath();
+//        this.photo=user.getPhotoPath();
     }
 }
