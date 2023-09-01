@@ -1,0 +1,102 @@
+<th:block th:fragment="query">
+    <div id="my-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="close">&times;</span>
+                <br>
+                <div class="whole-wrap">
+                    <div class="container box_1170">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10 col-md-10">
+                                <h3 class="mb-30 text-center">Запис на прийом</h3>
+                                <form method="post" class="query_form"  th:object="${query}" tabindex="1">
+                                    <div class="alert alert-info d-none" tabindex="1">
+                                        Запис успішно зроблено!
+                                    </div>
+                                    <div class="mt-10">
+                                        <label for="fullName">Ім'я Прізвище*:</label>
+                                        <input id="fullName" type="text" name="fullName" placeholder="Миколо Пупкін"
+                                               th:field="*{fullName}"
+                                               required class="single-input">
+
+                                    </div>
+                                    <div class="mt-10">
+                                        <label for="orderDates">Бажана дата візиту:</label>
+                                        <input id="orderDates" type="date" name="orderDates" placeholder="date"
+                                               th:field="*{orderDates}"
+                                               class="single-input">
+
+                                    </div>
+                                    <div class="mt-10">
+                                        <label for="orderPhone">Ваш телефон*:</label>
+                                        <input id="orderPhone" type="text" name="orderPhone" placeholder="0987654321"
+                                               th:field="*{orderPhone}"
+                                               onfocus="this.placeholder = ''" onblur="this.placeholder = '0987654321'"
+                                               required
+                                               class="single-input">
+                                    </div>
+                                    <div class="mt-10">
+                                        <div class="input-group-icon mt-10">
+                                            <label for="orderTime">Бажаний час візиту:</label>
+                                            <div class="form-select" id="default-select">
+                                                <select id="orderTime" name="orderTime" th:field="*{orderTime}">
+                                                    <option value="Ранок">Ранок</option>
+                                                    <option value="До обіду">До обіду</option>
+                                                    <option value="Після обіду">Після обіду</option>
+                                                    <option value="Вечір">Вечір</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-10">
+                                        <div class="input-group-icon mt-10">
+                                            <label for="orderAnimal">Вид:</label>
+                                            <div class="form-select">
+                                                <select id="orderAnimal" name="orderAnimal" th:field="*{orderAnimal}">
+                                                    <option value="Кіт">Кіт</option>
+                                                    <option value="Собака">Собака</option>
+                                                    <option value="Гризун">Гризун</option>
+                                                    <option value="Інший">Інший</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-10">
+                                        <div class="input-group-icon mt-10">
+                                            <label for="orderDoctor">Запис до:</label>
+                                            <div class="form-select">
+                                                <select id="orderDoctor" name="orderDoctor" th:field="*{orderDoctor}">
+                                                    <option value="Терапев">Терапев</option>
+                                                    <option value="Хірург">Хірург</option>
+                                                    <option value="Дерматолог">Дерматолог</option>
+                                                    <option value="Стоматолог">Стоматолог</option>
+                                                    <option value="Грумінг">Грумінг</option>
+                                                    <option value="Діагностичні процедури">Діагностичні процедури
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-10">
+                                        <label for="orderContent">Причина звернення (симптоми)</label>
+                                        <textarea id="orderContent" class="single-textarea" placeholder="orderContent"
+                                                  name="orderContent"
+                                                  th:field="*{orderContent}"
+                                                  onfocus="this.placeholder = ''"
+                                                  onblur="this.placeholder = 'Опис'" required></textarea>
+                                    </div>
+                                    <div class="mt-10 text-center">
+                                        <input type="submit" value="Записатися" class=" boxed-btn5 circle">
+                                    </div>
+                                </form>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

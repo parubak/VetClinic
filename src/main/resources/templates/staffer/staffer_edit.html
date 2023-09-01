@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Співробітник</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/gijgo.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+
+</head>
+<body>
+<!-- header_start  -->
+<div th:replace="/fragments/menuAdmin::headerAdmin"></div>
+<!-- header_start  -->
+
+<div class="container">
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-8 mx-auto">
+                        <h3 class="mb-30 text-center">Редагування інформації про співробітника</h3>
+                        <br>
+                        <div th:if="${photo}" class="text-center">
+                            <img th:src="${photo}"/>
+                        </div>
+                        <form th:action="@{/file/edit}" method="post" enctype="multipart/form-data">
+                            <div class="form-group  text-center">
+                                <label>Вибрати фото: </label>
+                                <input type="hidden" name="id" th:field="${staffer.id}"/>
+                                <div class="d-flex justify-content-center">
+                                    <input type="file" class="single-input col-5" name="image"
+                                           accept="image/png, image/jpeg"/>
+                                </div>
+                                <input type="submit" class="genric-btn link circle mt-10 dec" value="Змінити фото">
+                            </div>
+                            <br>
+
+                        </form>
+                        <form id="example-advanced-form" action="/admin/staffer/edit" method="post"
+                              th:object="${staffer}">
+                            <input type="hidden" th:field="*{id}"/>
+                            <input type="hidden" th:field="*{photos}"/>
+                            <div class="form-group">
+                                <label class="col-form-label" for="fullName">Ім`я повністю</label>
+                                <input id="fullName" name="fullName" th:field="*{fullName}" type="text"
+                                       class="single-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="description">Опис</label>
+                                <textarea class="single-textarea" id="description" name="description"
+                                          th:field="*{description}" rows="4">
+                                        </textarea>
+                            </div>
+                            <label for="hobbies" class=" col-form-label">Спеціалізація (можно вибрати
+                                декілька)</label>
+                            <div class="form-group">
+                                <select id="hobbies" th:field="*{specializations}" class="single-textarea"
+                                        size="10" multiple="multiple">
+                                    <option th:each="s : ${specializations}"
+                                            th:value="${{s}}"
+                                            th:text="${s.name}"
+                                            th:selected="${staffer.specializations.contains(s)}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="submit" class="genric-btn success circle" value="Зберегти">
+                                <a th:href="'/admin/staffer/delete/'+ *{id}" class="genric-btn danger circle">Видалити</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_start  -->
+<div th:replace="~{/fragments/menu::footer}"></div>
+<!-- footer_end  -->
+
+</body>
+</html>

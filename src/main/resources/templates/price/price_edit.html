@@ -1,0 +1,140 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Редагування послуги</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/gijgo.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+</head>
+<body>
+<!-- header_start  -->
+<div th:replace="/fragments/menuAdmin::headerAdmin"></div>
+<!-- header_start  -->
+<div class="container">
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-8 mx-auto">
+                        <h3 class="mb-30 text-center">Редагування послуги</h3>
+                        <div th:if="${param.save}">
+                            <div class="alert alert-info">
+                                Зміни збережено !!!
+                            </div>
+                        </div>
+                        <br>
+                        <form method="post" action="/admin/price/edit" th:object="${service}">
+                            <input type="hidden" th:field="*{id}" />
+                            <div class="form-group">
+                                <label class="col-form-label" for="title">Назва послуги</label>
+                                <input type="text" id="title" name="title" placeholder="Назва послуги"
+                                       th:field="*{title}"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Назва послуги'"
+                                       required
+                                       class="single-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="duration">Тривалість</label>
+                                <input type="text" id="duration" name="duration" placeholder="Тривалість"
+                                       th:field="*{duration}"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Тривалість'" required
+                                       class="single-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="price">Вартість</label>
+                                <input type="number" id="price" name="price" placeholder="Вартість" th:field="*{price}"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Вартість'" required
+                                       class="single-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="description">Опис</label>
+                                <textarea class="single-textarea" id="description" placeholder="Опис" name="description"
+                                          th:field="*{description}"
+                                          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Опис'" required>
+                                </textarea>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <input type="submit" class="genric-btn success circle" th:value="Зберегти" >
+                                <a th:href="'/admin/price/delete/'+ *{id}" class="genric-btn danger circle">Видалити</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- JS here -->
+    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script src="js/ajax-form.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/scrollIt.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/nice-select.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/gijgo.min.js"></script>
+
+    <!--contact js-->
+    <script src="js/contact.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script>
+
+    <script src="js/main.js"></script>
+    <script>
+        $('#datepicker').datepicker({
+            iconsLibrary: 'fontawesome',
+            disableDaysOfWeek: [0, 0],
+            //     icons: {
+            //      rightIcon: '<span class="fa fa-caret-down"></span>'
+            //  }
+        });
+        $('#datepicker2').datepicker({
+            iconsLibrary: 'fontawesome',
+            icons: {
+                rightIcon: '<span class="fa fa-caret-down"></span>'
+            }
+
+        });
+        var timepicker = $('#timepicker').timepicker({
+            format: 'HH.MM'
+        });
+    </script>
+<!-- footer_start  -->
+<div th:replace="~{/fragments/menu::footer}"></div>
+<!-- footer_end  -->
+</body>
+</html>
