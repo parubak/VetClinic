@@ -34,7 +34,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         http.csrf().disable().userDetailsService(userDetailsService)
                 .authenticationProvider(authProvider())
                 .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/admin/registration/**").permitAll()
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/dell/**").permitAll()
                         .requestMatchers("/styles/**").permitAll()
@@ -80,8 +79,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-//        registry.addResourceHandler("/img/**")
-//                        .addResourceLocations("file:/"+ "dell" + "/");
         registry
                 .addResourceHandler("css/**")
                 .addResourceLocations("classpath:/static/css/");

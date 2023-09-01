@@ -33,14 +33,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private RoleRepository roleRepository;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
 
 
     public UserServiceImpl(){
-//        this.courses= new HashMap<>();
-//        this.courseIdGenerator=new AtomicInteger(0);
-////        initializeUser();
     }
     @Override
     public void saveUserRegistration(UserDto userDto) {
@@ -55,7 +50,6 @@ public class UserServiceImpl implements IUserService {
         PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
         User user=User.builder().firstName(userDto.getName())
                 .number(userDto.getNumber())
-//                .password(userDto.getPassword())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .roles(List.of(role))
                 .build();
@@ -133,11 +127,6 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-
-//    @Override
-//    public String getPathPhoto(Long id) {
-//        return null;
-//    }
 
 
 

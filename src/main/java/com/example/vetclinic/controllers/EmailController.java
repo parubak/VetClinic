@@ -25,14 +25,6 @@ public class EmailController {
     @Autowired
     EmailServiceImpl emailService;
 
-//    @GetMapping("/query")
-//    public String query(Model model)
-//    {
-//        Query query = new Query();
-//
-//        model.addAttribute("query", query);
-//        return "email/query";
-//    }
     @PostMapping(value = "/query")
     public @ResponseBody ResponseEntity sendSimpleEmail(Query query) {
 
